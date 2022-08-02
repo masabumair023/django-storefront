@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.core.validators import MinValueValidator
 from django.db import models
 
@@ -37,6 +38,10 @@ class Product(models.Model):
 
     class Meta:
         ordering = ['title']
+    
+    @property
+    def calculate_tax(self):
+        return self.unit_price * Decimal(1.1)
 
 
 class Customer(models.Model):
