@@ -39,9 +39,9 @@ class Product(models.Model):
     class Meta:
         ordering = ['title']
     
-    @property
-    def calculate_tax(self):
-        return self.unit_price * Decimal(1.1)
+    # @property
+    # def calculate_tax(self):
+    #     return self.unit_price * Decimal(1.1)
 
 
 class Customer(models.Model):
