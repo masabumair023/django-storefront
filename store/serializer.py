@@ -1,7 +1,7 @@
 from decimal import Decimal
 from rest_framework import serializers
 
-from .models import Collection, Product
+from .models import Collection, Product, Review
 
 
 class CollectionSerializer(serializers.ModelSerializer):
@@ -27,3 +27,7 @@ class ProductSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'unit_price', 'price_with_tax', 'inventory', 'collection']
 
 
+class ReviewSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Review
+        fields = ['id', 'name', 'description', 'date', 'product']
