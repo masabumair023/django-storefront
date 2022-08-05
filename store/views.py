@@ -1,7 +1,7 @@
 from django.db.models import Count
 
-from .models import Collection, Product
-from .serializer import CollectionSerializer, ProductSerializer
+from .models import Collection, Product, Review
+from .serializer import CollectionSerializer, ProductSerializer, ReviewSerializer
 
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.viewsets import ModelViewSet
@@ -16,4 +16,10 @@ class ProductViewSet(ModelViewSet):
 class CollectionViewSet(ModelViewSet):
     queryset = Collection.objects.annotate(product_count=Count('product')).all()
     serializer_class = CollectionSerializer
+    lookup_field = 'id'
+
+
+class ReviewViewSet(ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
     lookup_field = 'id'
