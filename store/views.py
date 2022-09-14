@@ -1,10 +1,12 @@
 from django.db.models import Count
 
-from .models import Collection, Product, Review
-from .serializer import CollectionSerializer, ProductSerializer, ReviewSerializer
+from .models import Collection, Order, Product, Review
+from .serializer import CollectionSerializer, OrderSerializer, ProductSerializer, ReviewSerializer
 
 from rest_framework.generics import ListCreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import IsAuthenticated
+
 # Create your views here.
 
 class ProductViewSet(ModelViewSet):
@@ -23,3 +25,9 @@ class ReviewViewSet(ModelViewSet):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
     lookup_field = 'id'
+
+
+class OrderViewSet(ModelViewSet):
+    queryset = Order.objects.all()
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
