@@ -2,6 +2,8 @@ from decimal import Decimal
 from django.core.validators import MinValueValidator
 from django.db import models
 
+from store.validators import validate_image_size
+
 
 class Promotion(models.Model):
     description = models.CharField(max_length=255)
@@ -11,7 +13,7 @@ class Promotion(models.Model):
 class Collection(models.Model):
     title = models.CharField(max_length=255)
     featured_product = models.ForeignKey(
-        'Product', on_delete=models.SET_NULL, null=True, related_name='+', blank=True)
+    'Product', on_delete=models.SET_NULL, null=True, related_name='+', blank=True)
 
     def __str__(self) -> str:
         return self.title
@@ -42,6 +44,11 @@ class Product(models.Model):
     # @property
     # def calculate_tax(self):
     #     return self.unit_price * Decimal(1.1)
+
+
+class ProductImages(models.Model):
+    product = models.ForeignKey(Product, on_delete=models.CASCADE, related_name='images')
+    image = models.ImageField(upload_to='store/images', validators=[validate_image_size])
 
 
 class Customer(models.Model):
