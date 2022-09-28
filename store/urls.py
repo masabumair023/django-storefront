@@ -8,7 +8,9 @@ router.register('orders', views.OrderViewSet)
 
 products_router = routers.NestedSimpleRouter(router, 'products', lookup='product')
 products_router.register('reviews', views.ReviewViewSet, basename='product-reviews')
-
+products_router.register('images', views.ProductImageViewSet, basename='product-images')
 
 # URLConf
 urlpatterns = router.urls + products_router.urls
+
+print(urlpatterns)
