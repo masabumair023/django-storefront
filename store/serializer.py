@@ -1,7 +1,7 @@
 from decimal import Decimal
 from rest_framework import serializers
 
-from .models import Collection, Order, OrderItem, Product, Review
+from .models import Collection, Order, OrderItem, Product, Review, ProductImages
 
 
 class CollectionSerializer(serializers.ModelSerializer):
@@ -12,7 +12,20 @@ class CollectionSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'product_count']
 
 
+class ProductImageSerializer(serializers.ModelSerializer):
+
+    def create(self, validated_data):
+        product_id = self.context['product_id']
+        return ProductImages.objects.create(product_id=product_id, **validated_data)
+
+    class Meta:
+        model = ProductImages
+        fields = ['id', 'image', 'product_id']
+
+
 class ProductSerializer(serializers.ModelSerializer):
+
+    images = ProductImageSerializer(many=True, read_only=True)
 
     price_with_tax = serializers.SerializerMethodField('calculate_tax')
 
@@ -24,7 +37,7 @@ class ProductSerializer(serializers.ModelSerializer):
     )
     class Meta:
         model = Product
-        fields = ['id', 'title', 'unit_price', 'price_with_tax', 'inventory', 'collection']
+        fields = ['id', 'title', 'unit_price', 'price_with_tax', 'inventory', 'collection', 'images']
 
 
 class SimpleProductSerializer(serializers.ModelSerializer):
@@ -51,3 +64,4 @@ class OrderSerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ['id', 'placed_at', 'payment_status', 'customer', 'items']
+
