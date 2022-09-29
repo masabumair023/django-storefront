@@ -12,5 +12,3 @@ products_router.register('images', views.ProductImageViewSet, basename='product-
 
 # URLConf
 urlpatterns = router.urls + products_router.urls
-
-print(urlpatterns)
