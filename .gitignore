@@ -3,3 +3,6 @@ __pycache__/
 
 # .env file
 storefront/.env
+
+# static files
+/static/
