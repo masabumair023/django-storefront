@@ -11,3 +11,7 @@ class WebsiteUser(HttpUser):
         self.client.get(
             f'/store/products/{product_id}', 
             name='store/products/:id')
+
+    @task
+    def say_hello(self):
+        self.client.get('/playground/hello/')
