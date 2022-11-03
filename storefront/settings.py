@@ -184,6 +184,8 @@ ADMINS = [
     ('Masab', 'admin@masab.com')
 ]
 
+# celery configuration for running background tasks
+
 CELERY_BROKER_URL = 'redis://localhost:6379/1'
 CELERY_BEAT_SCHEDULE = {
     'notify_customers': {
@@ -193,6 +195,8 @@ CELERY_BEAT_SCHEDULE = {
     }
 }
 
+# cache configuration
+
 CACHES = {
     "default": {
         "BACKEND": "django_redis.cache.RedisCache",
@@ -200,6 +204,35 @@ CACHES = {
         'TIMEOUT': 10 * 60, # 10 minutes
         "OPTIONS": {
             "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        }
+    }
+}
+
+# Logging configuration
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler'
+        },
+        'file': {
+            'class': 'logging.FileHandler',
+            'filename': 'general.log',
+            'formatter': 'verbose',
+        }
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console', 'file'],
+            'level': env('DJANO_LOG_LEVEL')
+        }
+    },
+    'formatters': {
+        'verbose': {
+            'format': '{asctime} ({levelname} - {name} - {message})',
+            'style': '{' #str.format()
         }
     }
 }
