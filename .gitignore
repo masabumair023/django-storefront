@@ -6,3 +6,10 @@ storefront/.env
 
 # static files
 /static/
+
+#celery files
+celerybeat-schedule
+
+# log messages file
+general.log
+
